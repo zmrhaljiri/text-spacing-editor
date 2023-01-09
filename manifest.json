@@ -1,0 +1,21 @@
+{
+  "name": "Text Spacing Editor",
+  "version": "0.0.1",
+  "description": "A tool for editing text spacing properties on the website. WCAG conformance values included.",
+  "manifest_version": 3,
+  "author": "Jiří Zmrhal",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Text Spacing Editor"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
