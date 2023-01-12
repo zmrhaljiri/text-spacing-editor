@@ -37,7 +37,7 @@ let state = {
 
 // On first load, set state from local storage
 chrome.storage.local.get(["localState"]).then((result) => {
-  state = result.localState
+  if (Object.keys(result).length) state = result.localState
 
   saveValues(state)
 });
