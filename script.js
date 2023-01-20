@@ -93,11 +93,13 @@ function saveValues(state) {
 
 // Update CSS in the <style> tag
 function applyStyles(state) {
-  let styleEl = document.getElementById("accessibility-test")
+  const appId = "text-spacing-editor"
+
+  let styleEl = document.querySelector(`[data-extension-id='${appId}']`)
 
   if (!styleEl) {
     styleEl = document.createElement('style')
-    styleEl.id = "accessibility-test"
+    styleEl.dataset.extensionId = appId
     document.head.appendChild(styleEl);
   }
 
@@ -114,4 +116,31 @@ function applyStyles(state) {
       }
     ` : ''}
   `
+
+  processIframes(document, styleEl.innerHTML)
+
+  function processIframes(doc, code) {
+    let iframes = [...doc.querySelectorAll("iframe")]
+
+    if (iframes.length) {
+      iframes.map((iframe) => {
+        if (iframe && iframe.contentDocument) {
+          const nestedDoc = iframe.contentDocument;
+          let iframeStyleEl = nestedDoc.querySelector(`[data-extension-id='${appId}']`)
+
+          if (!iframeStyleEl) {
+            iframeStyleEl = nestedDoc.createElement('style')
+            iframeStyleEl.dataset.extensionId = appId
+            nestedDoc.head.appendChild(iframeStyleEl);
+          }
+
+          iframeStyleEl.innerHTML = code
+
+          processIframes(nestedDoc, code)
+        }
+      })
+    }
+
+    return null
+  }
 }
