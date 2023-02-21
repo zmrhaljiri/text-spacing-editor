@@ -4,4 +4,7 @@ A browser extension that allows you to set custom values for the following text 
 
 You can use it also as a way of testing the [WCAG success criterion 1.14.12 - Text Spacing](https://www.w3.org/WAI/WCAG21/Understanding/text-spacing.html).
 
-Chrome Web Store: https://chrome.google.com/webstore/detail/text-spacing-editor/amnelgbfbdlfjeaobejkfmjjnmeddaoj
+- Chrome version (Chrome Web Store): https://chrome.google.com/webstore/detail/text-spacing-editor/amnelgbfbdlfjeaobejkfmjjnmeddaoj
+- Edge version (Edge Add-ons): TODO
+- Firefox version (Firefox Add-ons): TODO
+- Safari version (Mac App Store): TODO
