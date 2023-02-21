@@ -42,7 +42,7 @@ chrome.storage.local.get(["localState"]).then((result) => {
   saveValues(state)
 });
 
-// Add event listeners to inputs
+// Add event listener to inputs
 
 config.map(({property, input}) => {
   input.addEventListener('change', () => {
