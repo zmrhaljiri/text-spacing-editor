@@ -7,18 +7,33 @@
   <body>
     <main>
       <h1>Text Spacing Editor</h1>
-      <p><a href="https://www.w3.org/WAI/WCAG21/Understanding/text-spacing.html" target="_blank" rel="noopener noreferrer">WCAG <strong>1.14.12 - Text Spacing - AA</strong></a> - no loss of content or functionality occurs by setting all of these properties to the following values:</p>
-      <ul>
-        <li><em>Line height</em> to at least <em>1.5</em> times the font size</li>
-        <li><em>Letter spacing</em> to at least <em>0.12</em> times the font size</li>
-        <li><em>Word spacing</em> to at least <em>0.16</em> times the font size</li>
-        <li><em>Spacing following paragraphs</em> to at least <em>2</em> times the font size</li>
-      </ul>
-      <p>Adjust text spacing properties by using controls below.</p>
-      <p>Activate the <strong>Set WCAG values</strong> button to set all of the properties to their minimum required values.</p>
-      <p>Activate the <strong>Reset values</strong> button to reset all the values to their previous values.</p>
+
+      <p>Set text spacing properties using controls below. Supports iframes (also nested) on the <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener noreferrer">same origin</a>.</p>
+
+      <details>
+        <summary class="box">Info about WCAG <strong>1.4.12 - Text Spacing - AA</strong></summary>
+
+        <div class="box">
+          <p><a href="https://www.w3.org/WAI/WCAG21/Understanding/text-spacing.html" target="_blank" rel="noopener noreferrer">WCAG <strong>1.4.12 - Text Spacing - AA</strong></a> - no loss of content or functionality occurs by setting all of these properties to the following values:</p>
+          <ul>
+            <li><em>Line height</em> to at least <em>1.5</em> times the font size</li>
+            <li><em>Letter spacing</em> to at least <em>0.12</em> times the font size</li>
+            <li><em>Word spacing</em> to at least <em>0.16</em> times the font size</li>
+            <li><em>Spacing following paragraphs</em> to at least <em>2</em> times the font size</li>
+          </ul>
+        </div>
+      </details>
+
+      <p>Use the <strong>Enable/disable styles</strong> button to enable or disable your custom styles. You can also use <code>Ctrl+Shift+X</code> (<code>Command+Shift+X</code> on Mac) for this.</p>
+      <p>Use the <strong>Set WCAG values</strong> button to set all of the properties to the WCAG conformance values.</p>
+      <p>Use the <strong>Reset values</strong> button to reset all the styles to their previous values.</p>
+
+      <button id="toggle">Disable styles</button>
       <button id="wcag">Set WCAG values</button>
       <button id="reset">Reset values</button>
+
+      <p role="alert" id="message"></p>
+
       <div class="controls-group">
         <div class="controls">
           <label for="input-line-height">Line height</label>

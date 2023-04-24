@@ -1,7 +1,7 @@
 {
   "name": "Text Spacing Editor",
   "version": "1.0.0",
-  "description": "A tool for editing text spacing properties on websites. WCAG conformance values included.",
+  "description": "A tool for editing text spacing properties on web pages. WCAG conformance information included.",
   "manifest_version": 3,
   "author": "Jiří Zmrhal",
   "permissions": [
@@ -17,5 +17,23 @@
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png"
+  },
+  "commands": {
+    "_execute_action": {
+        "suggested_key": "Ctrl+Shift+S",
+        "description": "Show or hide the extension window"
+    },
+    "toggle": {
+      "suggested_key": {
+        "windows": "Ctrl+Shift+X",
+        "mac": "Command+Shift+X",
+        "chromeos": "Ctrl+Shift+X",
+        "linux": "Ctrl+Shift+X"
+      },
+      "description": "Enable or disable text spacing properties."
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
   }
 }
