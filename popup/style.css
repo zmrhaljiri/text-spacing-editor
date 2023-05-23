@@ -30,10 +30,6 @@ h1 {
   gap: 10px;
 }
 
-button {
-  margin-bottom: 1rem;
-}
-
 code {
   padding: 0.15rem;
   border: 1px solid black;
@@ -58,13 +54,11 @@ details:hover {
 }
 
 #message {
-  position: absolute !important;
-  border: 0 !important;
-  padding: 0 !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute;
+  border: 0;
+  padding: 0;
+  inset: 0;
+  z-index: -1;
 }
 
 
