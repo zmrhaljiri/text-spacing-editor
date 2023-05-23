@@ -11,3 +11,10 @@ export const WSAG_VALUES: TStyle = {
   "word-spacing": "0.16",
   "paragraph-spacing": "2"
 }
+
+export const DEFAULT_VALUES: TStyle = {
+  "line-height": "unset",
+  "letter-spacing": "unset",
+  "word-spacing": "unset",
+  "paragraph-spacing": "unset"
+}
