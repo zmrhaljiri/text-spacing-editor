@@ -1,9 +1,9 @@
 {
-  "name": "cb-text-spacing-editor",
-  "displayName": "Cb text spacing editor",
-  "version": "0.0.1",
-  "description": "A basic Plasmo extension.",
-  "author": "ds",
+  "name": "text-spacing-editor",
+  "displayName": "Text Spacing Editor",
+  "version": "1.0.2",
+  "description": "A tool for editing text spacing properties on web pages. WCAG conformance information included.",
+  "contributors": ["Jiří Zmrhal", "Dmitrii Savinykh"],
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
