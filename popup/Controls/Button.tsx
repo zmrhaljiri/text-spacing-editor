@@ -27,8 +27,8 @@ async function updatePageCss(
 }
 
 export const Button = ({ setMessage }) => {
-  const [styles, setStyles] = useStorage("styles")
-  const [enabled, setEnabled] = useStorage("enabled", false)
+  const [styles, setStyles, { setRenderValue }] = useStorage<TStyle>("styles")
+  const [enabled, setEnabled] = useStorage<boolean>("enabled", false)
 
   const handleToggle = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -50,6 +50,8 @@ export const Button = ({ setMessage }) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       updatePageCss(styles, tabs[0].id, false)
     })
+    setStyles(undefined)
+    setRenderValue(undefined)
     setMessage("Text spacing properties were reset.")
   }
 
