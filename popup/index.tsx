@@ -1,5 +1,3 @@
-import { useState } from "react"
-
 import { Controls } from "./Controls"
 import { Main } from "./Main"
 
