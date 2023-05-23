@@ -4,7 +4,7 @@
   "version": "1.0.2",
   "description": "A tool for editing text spacing properties on web pages. WCAG conformance information included.",
   "contributors": ["Jiří Zmrhal", "Dmitrii Savinykh"],
-  "license": "gpl-3.0",
+  "license": "GPL-3.0-only",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
