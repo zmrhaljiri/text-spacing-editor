@@ -23,5 +23,20 @@
     "@types/react-dom": "18.0.11",
     "prettier": "2.8.7",
     "typescript": "5.0.3"
+  },
+  "manifest": {
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "addon@example.com",
+        "strict_min_version": "42.0"
+      }
+    },
+    "host_permissions": [
+      "https://*/*"
+    ],
+    "permissions": [
+      "scripting",
+      "storage"
+    ]
   }
 }
