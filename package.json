@@ -4,6 +4,7 @@
   "version": "1.0.2",
   "description": "A tool for editing text spacing properties on web pages. WCAG conformance information included.",
   "contributors": ["Jiří Zmrhal", "Dmitrii Savinykh"],
+  "license": "gpl-3.0",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
@@ -27,8 +28,12 @@
   "manifest": {
     "browser_specific_settings": {
       "gecko": {
-        "id": "addon@example.com",
-        "strict_min_version": "42.0"
+        "id": "dmitrii.savinykh@actumdigital.com",
+        "strict_min_version": "109.0"
+      },
+       "gecko_android": {
+        "id": "dmitrii.savinykh@actumdigital.com",
+        "strict_min_version": "109.0"
       }
     },
     "host_permissions": [
