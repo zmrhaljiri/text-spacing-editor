@@ -2,6 +2,11 @@
     color-scheme: light dark;
 }
 
+body {
+  color: black;
+  background: white;
+}
+
 html {
   width: 400px;
 }
@@ -64,6 +69,11 @@ details:hover {
 
 @media (prefers-color-scheme: dark) {
     /* Dark Mode styles go here. */
+
+    body {
+      color: white;
+      background: #333;
+    }
     code {
       padding: 0.15rem;
       border: 1px solid #e9e9e9;

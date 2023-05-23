@@ -4,7 +4,11 @@ export const useCustomMessageWithTimeout = () => {
   const [message, setMessage] = useState("")
 
   useEffect(() => {
-    setTimeout(() => setMessage(""), 3000)
+    ;(async () => {
+      await new Promise((resolve) =>
+        setTimeout(() => resolve(setMessage("")), 3000)
+      )
+    })()
   }, [message])
 
   return { message, setMessage }
