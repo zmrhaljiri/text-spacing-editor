@@ -4,15 +4,20 @@ export const buildCSSToInject = (state: TStyle, tabId: number) => {
   let globalStyles = ""
   let paragraphStyles = ""
 
-  Object.keys(state).forEach((key) => {
+  for (const [key, value] of Object.entries(state)) {
+    // Default values are used for UI only!!
+    // If you inject `unset` value to DOM, you break initial styling
+    if (value === "unset") break
+
+    // Parse style object and format CSS properties
     if (key === "paragraph-spacing") {
-      paragraphStyles += `margin-bottom: ${state[key]}em !important;`
+      paragraphStyles += `margin-bottom: ${value}em !important;`
     } else if (key !== "line-height") {
-      globalStyles += `${key}: ${state[key]}em !important;`
+      globalStyles += `${key}: ${value}em !important;`
     } else {
-      globalStyles += `${key}: ${state[key]} !important;`
+      globalStyles += `${key}: ${value} !important;`
     }
-  })
+  }
 
   const payload = {
     target: {
