@@ -2,10 +2,27 @@ import { useState } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
-import type { TStyle } from "~helpers/constants"
+import { DEFAULT_VALUES, type TStyle } from "~helpers/constants"
+import { updatePageCss } from "~helpers/updatePageCSS"
 
-export const Slider = () => {
-  const [styles, setStyles, { setRenderValue }] = useStorage<TStyle>("styles")
+export const Slider = ({ styles, enabled, setStyles, setRenderValue }) => {
+  const handleCSSChange = async (key, value) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      updatePageCss(
+        styles,
+        {
+          ...styles,
+          [key]: value
+        },
+        tabs[0].id,
+        enabled
+      )
+    })
+    await setStyles({
+      ...styles,
+      [key]: value
+    })
+  }
 
   return (
     <div className="controls-group">
@@ -18,14 +35,16 @@ export const Slider = () => {
           step="0.1"
           className="slider"
           id="input-line-height"
-          value={styles ? styles["line-height"] : ""}
-          onChange={(e) =>
+          disabled={!enabled}
+          value={styles["line-height"]}
+          onChange={async (e) => {
             setRenderValue({ ...styles, "line-height": e.target.value })
-          }
+          }}
+          onChangeCapture={async (e) => {
+            handleCSSChange("line-height", (e.target as HTMLInputElement).value)
+          }}
         />
-        <span id="value-line-height">
-          {styles ? styles["line-height"] : ""}
-        </span>
+        <span id="value-line-height">{styles["line-height"]}</span>
       </div>
       <div className="controls">
         <label htmlFor="input-letter-spacing">Letter spacing</label>
@@ -36,14 +55,22 @@ export const Slider = () => {
           step="0.01"
           className="slider"
           id="input-letter-spacing"
-          value={styles ? styles["letter-spacing"] : ""}
-          onChange={(e) =>
+          disabled={!enabled}
+          value={styles["letter-spacing"]}
+          onChange={(e) => {
             setRenderValue({ ...styles, "letter-spacing": e.target.value })
-          }
+            setStyles({ ...styles, "letter-spacing": e.target.value })
+          }}
+          onChangeCapture={async (e) => {
+            handleCSSChange(
+              "letter-spacing",
+              (e.target as HTMLInputElement).value
+            )
+          }}
         />
         <span id="value-letter-spacing">
-          {" "}
-          {styles ? styles["letter-spacing"] : ""}
+          {styles["letter-spacing"]}
+          {styles["letter-spacing"] !== "unset" && "em"}
         </span>
       </div>
       <div className="controls">
@@ -55,14 +82,22 @@ export const Slider = () => {
           step="0.01"
           className="slider"
           id="input-word-spacing"
-          value={styles ? styles["word-spacing"] : ""}
-          onChange={(e) =>
+          disabled={!enabled}
+          value={styles["word-spacing"]}
+          onChange={(e) => {
             setRenderValue({ ...styles, "word-spacing": e.target.value })
-          }
+            setStyles({ ...styles, "word-spacing": e.target.value })
+          }}
+          onChangeCapture={async (e) => {
+            handleCSSChange(
+              "word-spacing",
+              (e.target as HTMLInputElement).value
+            )
+          }}
         />
         <span id="value-word-spacing">
-          {" "}
-          {styles ? styles["word-spacing"] : ""}
+          {styles["word-spacing"]}
+          {styles["word-spacing"] !== "unset" && "em"}
         </span>
       </div>
       <div className="controls">
@@ -74,14 +109,22 @@ export const Slider = () => {
           step="0.1"
           className="slider"
           id="input-paragraph-spacing"
-          value={styles ? styles["paragraph-spacing"] : ""}
-          onChange={(e) =>
+          disabled={!enabled}
+          value={styles["paragraph-spacing"]}
+          onChange={(e) => {
             setRenderValue({ ...styles, "paragraph-spacing": e.target.value })
-          }
+            setStyles({ ...styles, "paragraph-spacing": e.target.value })
+          }}
+          onChangeCapture={async (e) => {
+            handleCSSChange(
+              "paragraph-spacing",
+              (e.target as HTMLInputElement).value
+            )
+          }}
         />
         <span id="value-paragraph-spacing">
-          {" "}
-          {styles ? styles["paragraph-spacing"] : ""}
+          {styles["paragraph-spacing"]}
+          {styles["paragraph-spacing"] !== "unset" && "em"}
         </span>
       </div>
     </div>

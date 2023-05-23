@@ -1,38 +1,19 @@
 import { useStorage } from "@plasmohq/storage/hook"
 
-import { buildCSSToInject } from "~helpers/buildCSSToInject"
-import { type TStyle, WSAG_VALUES } from "~helpers/constants"
+import { DEFAULT_VALUES, type TStyle, WSAG_VALUES } from "~helpers/constants"
+import { updatePageCss } from "~helpers/updatePageCSS"
 
-async function updatePageCss(
-  styles: TStyle,
-  tabId: number,
-  stylesEnabled: boolean
-) {
-  //if we already injected any styles, remove them before new inject
-  if (styles) {
-    const payload = buildCSSToInject(styles, tabId)
-    await chrome.scripting.removeCSS(payload)
-  }
-
-  if (stylesEnabled) {
-    // Generate payload for new state
-    const payload = buildCSSToInject(styles, tabId)
-
-    try {
-      await chrome.scripting.insertCSS(payload)
-    } catch (err) {
-      console.error(`failed to insert CSS: ${err}`)
-    }
-  }
-}
-
-export const Button = ({ setMessage }) => {
-  const [styles, setStyles, { setRenderValue }] = useStorage<TStyle>("styles")
-  const [enabled, setEnabled] = useStorage<boolean>("enabled", false)
-
+export const Button = ({
+  styles,
+  enabled,
+  setStyles,
+  setEnabled,
+  setRenderValue,
+  setMessage
+}) => {
   const handleToggle = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      updatePageCss(styles, tabs[0].id, !enabled)
+      updatePageCss(styles, styles, tabs[0].id, !enabled)
     })
     setEnabled((prev) => !prev)
     setMessage(
@@ -41,17 +22,18 @@ export const Button = ({ setMessage }) => {
   }
   const handleWCAG = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      updatePageCss(WSAG_VALUES, tabs[0].id, enabled)
+      updatePageCss(styles, WSAG_VALUES, tabs[0].id, enabled)
     })
     setStyles(WSAG_VALUES)
     setMessage("Text spacing properties were set to WCAG values.")
   }
   const handleReset = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      updatePageCss(styles, tabs[0].id, false)
+      updatePageCss(styles, DEFAULT_VALUES, tabs[0].id, false)
     })
-    setStyles(undefined)
-    setRenderValue(undefined)
+    setStyles(DEFAULT_VALUES)
+    setRenderValue(DEFAULT_VALUES)
+
     setMessage("Text spacing properties were reset.")
   }
 
