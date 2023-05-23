@@ -10,22 +10,18 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@plasmohq/storage": "^1.6.0",
     "plasmo": "0.72.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@plasmohq/prettier-plugin-sort-imports": "3.6.4",
     "@types/chrome": "0.0.227",
     "@types/node": "18.15.11",
     "@types/react": "18.0.32",
     "@types/react-dom": "18.0.11",
     "prettier": "2.8.7",
-    "typescript": "5.0.3",
-    "@plasmohq/prettier-plugin-sort-imports": "3.6.4"
-  },
-  "manifest": {
-    "host_permissions": [
-      "https://*/*"
-    ]
+    "typescript": "5.0.3"
   }
 }
