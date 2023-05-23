@@ -1,12 +1,8 @@
 import { useState } from "react"
 
-import { Storage } from "@plasmohq/storage"
-
 import { Button } from "./Button"
 
 import "./style.css"
-
-const storage = new Storage()
 
 const IndexPopup = () => {
   const [message, setMessage] = useState("")
@@ -77,7 +73,10 @@ const IndexPopup = () => {
         their previous values.
       </p>
 
-      <Button storage={storage} setMessage={setMessage} />
+      <Button
+        //storage={storage}
+        setMessage={setMessage}
+      />
 
       <p role="alert" id="message">
         {message}
