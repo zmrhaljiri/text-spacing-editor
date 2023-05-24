@@ -10,7 +10,11 @@ export async function updatePageCss(
   // If we already injected any styles, remove them before new inject
   if (oldStyles) {
     const payload = buildCSSToInject(oldStyles, tabId)
-    await chrome.scripting.removeCSS(payload)
+    try {
+      await chrome.scripting.removeCSS(payload)
+    } catch (err) {
+      console.error(`failed to remove CSS: ${err}`)
+    }
   }
 
   if (stylesEnabled) {
