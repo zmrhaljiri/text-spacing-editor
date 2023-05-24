@@ -54,6 +54,21 @@ You can start editing the popup by modifying `popup.tsx`. It should auto-update 
 
 For further guidance, [visit our Documentation](https://docs.plasmo.com/)
 
+## Testing with Android
+
+
+You can use [web-ext](https://github.com/mozilla/web-ext) to test your build for Android.
+
+Assuming you have your Android device configured with adb and ready to use:
+
+```bash
+cd build/target-mvX-ENV # navigate to build target folder
+
+adb devices # copy device name
+
+web-ext run -t firefox-android  --android-device=DEVICE_NAME #use device name from adb
+```
+
 ## Making production build
 
 Run the following:
