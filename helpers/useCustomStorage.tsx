@@ -5,6 +5,7 @@ import { useStorage } from "@plasmohq/storage/hook"
 import { buildCSSToInject } from "./buildCSSToInject"
 import { DEFAULT_VALUES, type TStyle } from "./constants"
 import { debounce } from "./debounce"
+import { updatePageCSS } from "./updatePageCSS"
 
 export const useCustomStorage = () => {
   // Call Storage API and reset state values based on it.
@@ -17,14 +18,6 @@ export const useCustomStorage = () => {
 
   const [styles, setStyles] = useState<TStyle>(storageStyles)
 
-  // useEffect(() => {
-  //   setEnabled(storageEnabled)
-  // }, [storageEnabled])
-
-  // useEffect(() => {
-  //   setStyles(storageStyles)
-  // }, [storageStyles])
-
   const payload = buildCSSToInject(storageStyles, 0)
 
   const timeoutRef = useRef(null)
@@ -35,6 +28,21 @@ export const useCustomStorage = () => {
       setStorageStyles(newStyles)
     }, 500)
   ).current
+
+  useEffect(() => {
+    setStyles(storageStyles)
+    updatePageCSS(insertedCSSRef, storageStyles)
+  }, [storageStyles])
+
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener((message) => {
+      if (message === "toggle") {
+        const payload = enabled ? null : storageStyles
+        updatePageCSS(insertedCSSRef, payload)
+        setEnabled((prev: boolean) => !prev)
+      }
+    })
+  }, [enabled])
 
   const callStorageAPI = (newStyles) => {
     // Clear the previous timeout
