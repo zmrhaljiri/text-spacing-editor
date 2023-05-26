@@ -32,7 +32,7 @@ export const Button = ({
   }
 
   return (
-    <>
+    <div className="button-group">
       <button id="toggle" onClick={handleToggle}>
         {enabled ? "Disable" : "Enable"} styles
       </button>
@@ -42,6 +42,6 @@ export const Button = ({
       <button id="reset" onClick={handleReset} disabled={!enabled}>
         Reset values
       </button>
-    </>
+    </div>
   )
 }
