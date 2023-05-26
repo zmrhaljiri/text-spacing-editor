@@ -10,14 +10,8 @@ import { Button } from "./Button"
 import { Slider } from "./Slider"
 
 export const Controls = () => {
-  const {
-    styles,
-    enabled,
-    setStyles,
-    setEnabled,
-    setStorageStyles,
-    setStorageEnabled
-  } = useCustomStorage()
+  const { styles, enabled, setStyles, setStorageStyles, setStorageEnabled } =
+    useCustomStorage()
 
   const { message, setMessage } = useCustomMessageWithTimeout()
 
@@ -27,6 +21,7 @@ export const Controls = () => {
         styles={styles}
         enabled={enabled}
         setStyles={setStyles}
+        setStorageStyles={setStorageStyles}
         setEnabled={setStorageEnabled}
         setMessage={setMessage}
       />

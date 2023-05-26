@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 
 import { useStorage } from "@plasmohq/storage/hook"
 
@@ -18,11 +18,33 @@ export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
         enabled
       )
     })
-    await setStyles({
+    setStyles({
       ...styles,
       [key]: value
     })
   }
+
+  const changeHandler = (event) => {
+    const key = (event.target as HTMLInputElement).id.split("input-")[1]
+    const value = (event.target as HTMLInputElement).value
+    setStorageStyles({
+      ...styles,
+      [key]: value
+    })
+  }
+
+  // MAX_WRITE_OPERATIONS_PER_MINUTE quota is 2 calls per second
+  const debounce = (callback, wait = 500) => {
+    let timeoutId = null
+    return (...args) => {
+      window.clearTimeout(timeoutId)
+      timeoutId = window.setTimeout(() => {
+        callback.apply(null, args)
+      }, wait)
+    }
+  }
+
+  const debouncedChangeHandler = useCallback(debounce(changeHandler), [])
 
   return (
     <div className="controls-group">
@@ -40,12 +62,7 @@ export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
           onChange={async (e) => {
             handleCSSChange("line-height", (e.target as HTMLInputElement).value)
           }}
-          onChangeCapture={(e) => {
-            setStorageStyles({
-              ...styles,
-              "line-height": (e.target as HTMLInputElement).value
-            })
-          }}
+          onChangeCapture={debouncedChangeHandler}
         />
         <span id="value-line-height">{styles["line-height"]}</span>
       </div>
@@ -66,12 +83,7 @@ export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
               (e.target as HTMLInputElement).value
             )
           }}
-          onChangeCapture={(e) => {
-            setStorageStyles({
-              ...styles,
-              "letter-spacing": (e.target as HTMLInputElement).value
-            })
-          }}
+          onChangeCapture={debouncedChangeHandler}
         />
         <span id="value-letter-spacing">
           {styles["letter-spacing"]}
@@ -95,12 +107,7 @@ export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
               (e.target as HTMLInputElement).value
             )
           }}
-          onChangeCapture={(e) => {
-            setStorageStyles({
-              ...styles,
-              "word-spacing": (e.target as HTMLInputElement).value
-            })
-          }}
+          onChangeCapture={debouncedChangeHandler}
         />
         <span id="value-word-spacing">
           {styles["word-spacing"]}
@@ -124,12 +131,7 @@ export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
               (e.target as HTMLInputElement).value
             )
           }}
-          onChangeCapture={(e) => {
-            setStorageStyles({
-              ...styles,
-              "paragraph-spacing": (e.target as HTMLInputElement).value
-            })
-          }}
+          onChangeCapture={debouncedChangeHandler}
         />
         <span id="value-paragraph-spacing">
           {styles["paragraph-spacing"]}

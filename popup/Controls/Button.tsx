@@ -1,6 +1,4 @@
-import { useStorage } from "@plasmohq/storage/hook"
-
-import { DEFAULT_VALUES, type TStyle, WSAG_VALUES } from "~helpers/constants"
+import { DEFAULT_VALUES, WSAG_VALUES } from "~helpers/constants"
 import { updatePageCss } from "~helpers/updatePageCSS"
 
 export const Button = ({
@@ -8,7 +6,8 @@ export const Button = ({
   enabled,
   setStyles,
   setEnabled,
-  setMessage
+  setMessage,
+  setStorageStyles
 }) => {
   const handleToggle = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -24,6 +23,7 @@ export const Button = ({
       updatePageCss(styles, WSAG_VALUES, tabs[0].id, enabled)
     })
     setStyles(WSAG_VALUES)
+    setStorageStyles(WSAG_VALUES)
     setMessage("Text spacing properties were set to WCAG values.")
   }
   const handleReset = () => {
@@ -31,7 +31,7 @@ export const Button = ({
       updatePageCss(styles, DEFAULT_VALUES, tabs[0].id, false)
     })
     setStyles(DEFAULT_VALUES)
-
+    setStorageStyles(DEFAULT_VALUES)
     setMessage("Text spacing properties were reset.")
   }
 
