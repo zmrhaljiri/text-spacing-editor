@@ -1,51 +1,27 @@
-import { useCallback, useState } from "react"
+import { updatePageCSS } from "~helpers/updatePageCSS"
 
-import { useStorage } from "@plasmohq/storage/hook"
-
-import { DEFAULT_VALUES, type TStyle } from "~helpers/constants"
-import { updatePageCss } from "~helpers/updatePageCSS"
-
-export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
-  const handleCSSChange = async (key, value) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
-      await updatePageCss(
-        styles,
-        {
-          ...styles,
-          [key]: value
-        },
-        tabs[0].id,
-        enabled
-      )
-    })
-    setStyles({
+export const Slider = ({
+  styles,
+  enabled,
+  setStyles,
+  callStorageAPI,
+  insertedCSSRef
+}) => {
+  const handleInputChange = async (key, value) => {
+    // Build new styles
+    const newStyles = {
       ...styles,
       [key]: value
-    })
-  }
-
-  const changeHandler = (event) => {
-    const key = (event.target as HTMLInputElement).id.split("input-")[1]
-    const value = (event.target as HTMLInputElement).value
-    setStorageStyles({
-      ...styles,
-      [key]: value
-    })
-  }
-
-  // MAX_WRITE_OPERATIONS_PER_MINUTE quota is 2 calls per second
-  const debounce = (callback, wait = 500) => {
-    let timeoutId = null
-    return (...args) => {
-      window.clearTimeout(timeoutId)
-      timeoutId = window.setTimeout(() => {
-        callback.apply(null, args)
-      }, wait)
     }
+    // Remove previous styles and inject new one
+    updatePageCSS(insertedCSSRef, newStyles)
+
+    // Render new values
+    setStyles(newStyles)
+
+    // Debounced call to store values to browser's storage
+    callStorageAPI(newStyles)
   }
-
-  const debouncedChangeHandler = useCallback(debounce(changeHandler), [])
-
   return (
     <div className="controls-group">
       <div className="controls">
@@ -59,10 +35,12 @@ export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
           id="input-line-height"
           disabled={!enabled}
           value={styles["line-height"]}
-          onChange={async (e) => {
-            handleCSSChange("line-height", (e.target as HTMLInputElement).value)
-          }}
-          onChangeCapture={debouncedChangeHandler}
+          onChange={(e) =>
+            handleInputChange(
+              "line-height",
+              (e.target as HTMLInputElement).value
+            )
+          }
         />
         <span id="value-line-height">{styles["line-height"]}</span>
       </div>
@@ -77,13 +55,12 @@ export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
           id="input-letter-spacing"
           disabled={!enabled}
           value={styles["letter-spacing"]}
-          onChange={(e) => {
-            handleCSSChange(
+          onChange={(e) =>
+            handleInputChange(
               "letter-spacing",
               (e.target as HTMLInputElement).value
             )
-          }}
-          onChangeCapture={debouncedChangeHandler}
+          }
         />
         <span id="value-letter-spacing">
           {styles["letter-spacing"]}
@@ -101,13 +78,12 @@ export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
           id="input-word-spacing"
           disabled={!enabled}
           value={styles["word-spacing"]}
-          onChange={(e) => {
-            handleCSSChange(
+          onChange={(e) =>
+            handleInputChange(
               "word-spacing",
               (e.target as HTMLInputElement).value
             )
-          }}
-          onChangeCapture={debouncedChangeHandler}
+          }
         />
         <span id="value-word-spacing">
           {styles["word-spacing"]}
@@ -125,13 +101,12 @@ export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
           id="input-paragraph-spacing"
           disabled={!enabled}
           value={styles["paragraph-spacing"]}
-          onChange={(e) => {
-            handleCSSChange(
+          onChange={(e) =>
+            handleInputChange(
               "paragraph-spacing",
               (e.target as HTMLInputElement).value
             )
-          }}
-          onChangeCapture={debouncedChangeHandler}
+          }
         />
         <span id="value-paragraph-spacing">
           {styles["paragraph-spacing"]}

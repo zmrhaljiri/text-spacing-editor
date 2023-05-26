@@ -1,8 +1,3 @@
-import { useState } from "react"
-
-import { useStorage } from "@plasmohq/storage/hook"
-
-import { DEFAULT_VALUES, type TStyle } from "~helpers/constants"
 import { useCustomMessageWithTimeout } from "~helpers/useCustomMessageWithTimeout"
 import { useCustomStorage } from "~helpers/useCustomStorage"
 
@@ -10,20 +5,28 @@ import { Button } from "./Button"
 import { Slider } from "./Slider"
 
 export const Controls = () => {
-  const { styles, enabled, setStyles, setStorageStyles, setStorageEnabled } =
-    useCustomStorage()
+  const {
+    styles,
+    enabled,
+    storageStyles,
+    insertedCSSRef,
+    setStyles,
+    setEnabled,
+    callStorageAPI
+  } = useCustomStorage()
 
   const { message, setMessage } = useCustomMessageWithTimeout()
 
   return (
     <>
       <Button
-        styles={styles}
+        storageStyles={storageStyles}
         enabled={enabled}
         setStyles={setStyles}
-        setStorageStyles={setStorageStyles}
-        setEnabled={setStorageEnabled}
+        setEnabled={setEnabled}
         setMessage={setMessage}
+        callStorageAPI={callStorageAPI}
+        insertedCSSRef={insertedCSSRef}
       />
 
       <div
@@ -41,7 +44,8 @@ export const Controls = () => {
         styles={styles}
         enabled={enabled}
         setStyles={setStyles}
-        setStorageStyles={setStorageStyles}
+        callStorageAPI={callStorageAPI}
+        insertedCSSRef={insertedCSSRef}
       />
     </>
   )

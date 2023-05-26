@@ -1,37 +1,33 @@
 import { DEFAULT_VALUES, WSAG_VALUES } from "~helpers/constants"
-import { updatePageCss } from "~helpers/updatePageCSS"
+import { updatePageCSS } from "~helpers/updatePageCSS"
 
 export const Button = ({
-  styles,
   enabled,
+  callStorageAPI,
+  insertedCSSRef,
+  storageStyles,
   setStyles,
   setEnabled,
-  setMessage,
-  setStorageStyles
+  setMessage
 }) => {
   const handleToggle = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      updatePageCss(styles, styles, tabs[0].id, !enabled)
-    })
+    const payload = enabled ? null : storageStyles
+    updatePageCSS(insertedCSSRef, payload)
     setEnabled((prev: boolean) => !prev)
     setMessage(
       `Text spacing properties were ${!enabled ? "enabled" : "disabled"}.`
     )
   }
   const handleWCAG = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      updatePageCss(styles, WSAG_VALUES, tabs[0].id, enabled)
-    })
+    updatePageCSS(insertedCSSRef, WSAG_VALUES)
     setStyles(WSAG_VALUES)
-    setStorageStyles(WSAG_VALUES)
+    callStorageAPI(WSAG_VALUES)
     setMessage("Text spacing properties were set to WCAG values.")
   }
   const handleReset = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      updatePageCss(styles, DEFAULT_VALUES, tabs[0].id, false)
-    })
+    updatePageCSS(insertedCSSRef, null)
     setStyles(DEFAULT_VALUES)
-    setStorageStyles(DEFAULT_VALUES)
+    callStorageAPI(DEFAULT_VALUES)
     setMessage("Text spacing properties were reset.")
   }
 

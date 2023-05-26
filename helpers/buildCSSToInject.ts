@@ -1,10 +1,20 @@
 import type { TStyle } from "./constants"
 
-export const buildCSSToInject = (state: TStyle, tabId: number) => {
+export const buildCSSToInject = (css: TStyle | string, tabId: number) => {
   let globalStyles = ""
   let paragraphStyles = ""
 
-  for (const [key, value] of Object.entries(state)) {
+  if (typeof css === "string") {
+    return {
+      target: {
+        tabId: tabId,
+        allFrames: true
+      },
+      css
+    }
+  }
+
+  for (const [key, value] of Object.entries(css)) {
     // Default values are used for UI only!!
     // If you inject `unset` value to DOM, you break initial styling
     if (value === "unset") break
