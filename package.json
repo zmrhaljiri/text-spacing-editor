@@ -1,7 +1,7 @@
 {
   "name": "text-spacing-editor",
   "displayName": "Text Spacing Editor",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A tool for editing text spacing properties on web pages. WCAG conformance information included.",
   "contributors": ["Jiří Zmrhal", "Dmitrii Savinykh"],
   "license": "GPL-3.0-only",
@@ -29,11 +29,11 @@
   "manifest": {
     "browser_specific_settings": {
       "gecko": {
-        "id": "dmitrii.savinykh@actumdigital.com",
+        "id": "dsactum@pm.me",
         "strict_min_version": "109.0"
       },
        "gecko_android": {
-        "id": "dmitrii.savinykh@actumdigital.com",
+        "id": "dsactum@pm.me",
         "strict_min_version": "109.0"
       }
     },
