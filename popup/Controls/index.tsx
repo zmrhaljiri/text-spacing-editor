@@ -1,10 +1,14 @@
-import { useCustomMessageWithTimeout } from "~helpers/useCustomMessageWithTimeout"
+import { useState } from "react"
+
 import { useCustomStorage } from "~helpers/useCustomStorage"
+import { AccessibilityMessage } from "~popup/AccessibilityMessage"
 
 import { Button } from "./Button"
 import { Slider } from "./Slider"
 
 export const Controls = () => {
+  const [message, setMessage] = useState<string>()
+
   const {
     styles,
     enabled,
@@ -14,8 +18,6 @@ export const Controls = () => {
     setEnabled,
     callStorageAPI
   } = useCustomStorage()
-
-  const { message, setMessage } = useCustomMessageWithTimeout()
 
   return (
     <>
@@ -29,16 +31,7 @@ export const Controls = () => {
         insertedCSSRef={insertedCSSRef}
       />
 
-      <div
-        style={{
-          position: "relative",
-          padding: "1rem 0",
-          margin: "0 0 1rem 0"
-        }}>
-        <p role="alert" id="message">
-          {message}
-        </p>
-      </div>
+      <AccessibilityMessage message={message} />
 
       <Slider
         styles={styles}

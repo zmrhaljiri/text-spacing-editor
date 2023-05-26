@@ -14,11 +14,18 @@ html {
 body {
   font-family: 'Segoe UI Web (West European)','Segoe UI','-apple-system',BlinkMacSystemFont,Roboto,'Helvetica Neue',Helvetica,Ubuntu,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';
   font-size: 100%;
+  width: 400px;
 }
 
 h1 {
   font-size: 1.5rem;
   margin: 0;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
 }
 
 .controls-group {
@@ -43,11 +50,19 @@ code {
 
 details {
   border: 1px solid black;
+}
+
+summary {
   cursor: pointer;
 }
 
 details p {
   margin-top: 0;
+}
+
+details p,
+details ul {
+  cursor: default;
 }
 
 .box {
@@ -56,14 +71,6 @@ details p {
 
 details:hover {
   background-color: #e9e9e9;
-}
-
-#message {
-  position: absolute;
-  border: 0;
-  padding: 0;
-  inset: 0;
-  z-index: -1;
 }
 
 
