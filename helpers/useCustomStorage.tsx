@@ -8,7 +8,7 @@ import { debounce } from "./debounce"
 import { updatePageCSS } from "./updatePageCSS"
 
 export const useCustomStorage = () => {
-  // Call Storage API and reset state values based on it.
+  // Init storage.
   const [storageStyles, setStorageStyles] = useStorage<TStyle>("styles", (v) =>
     v === undefined || null ? DEFAULT_VALUES : v
   )
@@ -16,24 +16,31 @@ export const useCustomStorage = () => {
     v === undefined || null ? true : v
   )
 
+  // Used for UI and injecting. Storage API is rate limited.
   const [styles, setStyles] = useState<TStyle>(storageStyles)
 
-  const payload = buildCSSToInject(storageStyles, 0)
+  // Init style string, for example: `* { line-height: "1" }`
+  const { css } = buildCSSToInject(storageStyles, 0)
 
-  const timeoutRef = useRef(null)
-  const insertedCSSRef = useRef(payload.css)
+  // Use it as reference
+  const insertedCSSRef = useRef(css)
+
+  // Storage API is rate limited, debounce call
   const debouncedAPICall = useRef(
     debounce((newStyles) => {
       // Make API call here with the debounced value
       setStorageStyles(newStyles)
     }, 500)
   ).current
+  const timeoutRef = useRef(null)
 
+  // Update styles if anything is saved in Storage
   useEffect(() => {
     setStyles(storageStyles)
     updatePageCSS(insertedCSSRef, storageStyles)
   }, [storageStyles])
 
+  // Listen for shortcut message
   useEffect(() => {
     chrome.runtime.onMessage.addListener((message) => {
       if (message === "toggle") {
@@ -44,6 +51,7 @@ export const useCustomStorage = () => {
     })
   }, [enabled])
 
+  // react debounced API call
   const callStorageAPI = (newStyles) => {
     // Clear the previous timeout
     if (timeoutRef.current) {
