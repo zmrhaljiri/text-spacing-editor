@@ -8,14 +8,13 @@ export const Button = ({
   enabled,
   setStyles,
   setEnabled,
-  setRenderValue,
   setMessage
 }) => {
   const handleToggle = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       updatePageCss(styles, styles, tabs[0].id, !enabled)
     })
-    setEnabled((prev) => !prev)
+    setEnabled((prev: boolean) => !prev)
     setMessage(
       `Text spacing properties were ${!enabled ? "enabled" : "disabled"}.`
     )
@@ -32,7 +31,6 @@ export const Button = ({
       updatePageCss(styles, DEFAULT_VALUES, tabs[0].id, false)
     })
     setStyles(DEFAULT_VALUES)
-    setRenderValue(DEFAULT_VALUES)
 
     setMessage("Text spacing properties were reset.")
   }

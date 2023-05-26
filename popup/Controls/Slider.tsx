@@ -5,10 +5,10 @@ import { useStorage } from "@plasmohq/storage/hook"
 import { DEFAULT_VALUES, type TStyle } from "~helpers/constants"
 import { updatePageCss } from "~helpers/updatePageCSS"
 
-export const Slider = ({ styles, enabled, setStyles, setRenderValue }) => {
+export const Slider = ({ styles, enabled, setStyles, setStorageStyles }) => {
   const handleCSSChange = async (key, value) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      updatePageCss(
+    chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
+      await updatePageCss(
         styles,
         {
           ...styles,
@@ -38,10 +38,13 @@ export const Slider = ({ styles, enabled, setStyles, setRenderValue }) => {
           disabled={!enabled}
           value={styles["line-height"]}
           onChange={async (e) => {
-            setRenderValue({ ...styles, "line-height": e.target.value })
-          }}
-          onChangeCapture={async (e) => {
             handleCSSChange("line-height", (e.target as HTMLInputElement).value)
+          }}
+          onChangeCapture={(e) => {
+            setStorageStyles({
+              ...styles,
+              "line-height": (e.target as HTMLInputElement).value
+            })
           }}
         />
         <span id="value-line-height">{styles["line-height"]}</span>
@@ -58,14 +61,16 @@ export const Slider = ({ styles, enabled, setStyles, setRenderValue }) => {
           disabled={!enabled}
           value={styles["letter-spacing"]}
           onChange={(e) => {
-            setRenderValue({ ...styles, "letter-spacing": e.target.value })
-            setStyles({ ...styles, "letter-spacing": e.target.value })
-          }}
-          onChangeCapture={async (e) => {
             handleCSSChange(
               "letter-spacing",
               (e.target as HTMLInputElement).value
             )
+          }}
+          onChangeCapture={(e) => {
+            setStorageStyles({
+              ...styles,
+              "letter-spacing": (e.target as HTMLInputElement).value
+            })
           }}
         />
         <span id="value-letter-spacing">
@@ -85,14 +90,16 @@ export const Slider = ({ styles, enabled, setStyles, setRenderValue }) => {
           disabled={!enabled}
           value={styles["word-spacing"]}
           onChange={(e) => {
-            setRenderValue({ ...styles, "word-spacing": e.target.value })
-            setStyles({ ...styles, "word-spacing": e.target.value })
-          }}
-          onChangeCapture={async (e) => {
             handleCSSChange(
               "word-spacing",
               (e.target as HTMLInputElement).value
             )
+          }}
+          onChangeCapture={(e) => {
+            setStorageStyles({
+              ...styles,
+              "word-spacing": (e.target as HTMLInputElement).value
+            })
           }}
         />
         <span id="value-word-spacing">
@@ -112,14 +119,16 @@ export const Slider = ({ styles, enabled, setStyles, setRenderValue }) => {
           disabled={!enabled}
           value={styles["paragraph-spacing"]}
           onChange={(e) => {
-            setRenderValue({ ...styles, "paragraph-spacing": e.target.value })
-            setStyles({ ...styles, "paragraph-spacing": e.target.value })
-          }}
-          onChangeCapture={async (e) => {
             handleCSSChange(
               "paragraph-spacing",
               (e.target as HTMLInputElement).value
             )
+          }}
+          onChangeCapture={(e) => {
+            setStorageStyles({
+              ...styles,
+              "paragraph-spacing": (e.target as HTMLInputElement).value
+            })
           }}
         />
         <span id="value-paragraph-spacing">

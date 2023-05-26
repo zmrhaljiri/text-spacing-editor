@@ -4,19 +4,21 @@ import { useStorage } from "@plasmohq/storage/hook"
 
 import { DEFAULT_VALUES, type TStyle } from "~helpers/constants"
 import { useCustomMessageWithTimeout } from "~helpers/useCustomMessageWithTimeout"
+import { useCustomStorage } from "~helpers/useCustomStorage"
 
 import { Button } from "./Button"
 import { Slider } from "./Slider"
 
 export const Controls = () => {
-  // Set default storage values
-  const [styles, setStyles, { setRenderValue }] = useStorage<TStyle>(
-    "styles",
-    (v) => (v === undefined || null ? DEFAULT_VALUES : v)
-  )
-  const [enabled, setEnabled] = useStorage<boolean>("enabled", (v) =>
-    v === undefined || null ? true : v
-  )
+  const {
+    styles,
+    enabled,
+    setStyles,
+    setEnabled,
+    setStorageStyles,
+    setStorageEnabled
+  } = useCustomStorage()
+
   const { message, setMessage } = useCustomMessageWithTimeout()
 
   return (
@@ -25,8 +27,7 @@ export const Controls = () => {
         styles={styles}
         enabled={enabled}
         setStyles={setStyles}
-        setEnabled={setEnabled}
-        setRenderValue={setRenderValue}
+        setEnabled={setStorageEnabled}
         setMessage={setMessage}
       />
 
@@ -45,7 +46,7 @@ export const Controls = () => {
         styles={styles}
         enabled={enabled}
         setStyles={setStyles}
-        setRenderValue={setRenderValue}
+        setStorageStyles={setStorageStyles}
       />
     </>
   )
